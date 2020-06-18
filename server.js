@@ -6,6 +6,9 @@ const app = express();
 // Connect DB
 connectDB();
 
+// init middleware
+app.use(express.json({ extended: false }));
+
 app.get("/", (req, res) => res.json({ message: "Contact Management API" }));
 
 // HTTP Requests: GET(getting data from server), POST(Submitting info to server), PUT(Update info on server), DELETE(Delete info on server)
