@@ -320,6 +320,8 @@ input {
 
 input[type='text'],
 input[type='email'],
+input[type='tel'],
+input[type='number'],
 input[type='password'],
 input[type='date'],
 select,
@@ -456,4 +458,5 @@ table th {
         text-align: center;
         justify-content: center;
     }
+
 }
