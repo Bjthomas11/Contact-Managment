@@ -26,7 +26,7 @@ const AuthState = (props) => {
   const { token, isAuth, user, loading, error } = state;
 
   //   load user
-  const loadUser = () => console.log("load user");
+  // const loadUser = () => console.log("load user");
 
   // register user
   const register = async (formData) => {
@@ -44,13 +44,13 @@ const AuthState = (props) => {
   };
 
   // login user
-  const login = () => console.log("login user");
+  // const login = () => console.log("login user");
 
   //   logout
-  const logout = () => console.log("logout user");
+  // const logout = () => console.log("logout user");
 
   // clear errors
-  const clearErrors = () => console.log("clear errors");
+  const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
   return (
     <AuthContext.Provider
@@ -64,7 +64,7 @@ const AuthState = (props) => {
         // loadUser,
         // login,
         // logout,
-        // clearErrors,
+        clearErrors,
       }}
     >
       {children}
