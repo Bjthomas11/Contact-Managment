@@ -59,9 +59,18 @@ const AuthState = (props) => {
   };
 
   // login user
-  const login = () => {
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
+  const login = async (formData) => {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const res = await axios.post("/api/auth", formData, config);
+      dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+      loadUser();
+    } catch (error) {
+      dispatch({ type: LOGIN_FAIL, payload: error.response.data.message });
     }
   };
 
