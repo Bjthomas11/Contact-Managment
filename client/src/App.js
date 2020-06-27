@@ -9,8 +9,13 @@ import ContactState from "./context/contact/ContactState";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
 import Alerts from "./components/layout/alerts/alerts.component";
+import setAuthToken from "./utils/setAuthToken";
 
 import "./App.css";
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
   return (
@@ -18,7 +23,7 @@ const App = () => {
       <ContactState>
         <AlertState>
           <Router>
-            <Fragment className="App">
+            <div className="App">
               <NavBar title="Contact Keeper" icon="fas fa-id-card-alt" />
               <div className="container">
                 <Alerts />
@@ -29,7 +34,7 @@ const App = () => {
                   <Route exact path="/login" component={Login} />
                 </Switch>
               </div>
-            </Fragment>
+            </div>
           </Router>
         </AlertState>
       </ContactState>
