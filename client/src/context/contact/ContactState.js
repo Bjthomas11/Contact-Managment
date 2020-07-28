@@ -12,11 +12,13 @@ import {
   UPDATE_CONTACT,
   FILTER_CONTACTS,
   CLEAR_FILTER,
+  GET_CONTACTS,
+  CLEAR_CONTACTS,
 } from "../types";
 
 const ContactState = (props) => {
   const initialState = {
-    contacts: [],
+    contacts: null,
     current: null,
     filtered: null,
     error: null,
@@ -25,9 +27,23 @@ const ContactState = (props) => {
   const { children } = props;
   const { contacts, current, filtered, error } = state;
 
+  // get contacts
+  const getContacts = async () => {
+    try {
+      const res = await axios.get("/api/contacts");
+
+      dispatch({ type: GET_CONTACTS, payload: res.data });
+    } catch (error) {
+      dispatch({
+        type: CONTACT_ERROR,
+        payload: error.response.message,
+      });
+    }
+  };
+
   // add contact
   const addContact = async (contact) => {
-    // contact.id = uuidv4();
+    // contact.id = uuidv4();  // generated a dummy id
 
     const config = {
       headers: {
@@ -48,8 +64,22 @@ const ContactState = (props) => {
   };
 
   // delete contact
-  const deleteContact = (id) => {
-    dispatch({ type: DELETE_CONTACT, payload: id });
+  const deleteContact = async (id) => {
+    try {
+      const res = await axios.delete(`/api/contacts/${id}`);
+
+      dispatch({ type: DELETE_CONTACT, payload: id });
+    } catch (error) {
+      dispatch({
+        type: CONTACT_ERROR,
+        payload: error.response.message,
+      });
+    }
+  };
+
+  // clear contacts
+  const clearContacts = () => {
+    dispatch({ type: CLEAR_CONTACTS });
   };
 
   // set current contact
@@ -79,12 +109,14 @@ const ContactState = (props) => {
         contacts: contacts,
         addContact,
         deleteContact,
+        getContacts,
         current: current,
         setCurrent,
         clearCurrent,
         updateContact,
         filterContacts,
         clearFilter,
+        clearContacts,
         filtered: filtered,
         error,
       }}
